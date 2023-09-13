@@ -1,3 +1,5 @@
+#not mine
+
 import numpy as np
 
 def npy2cube(grid, start, step, cube_f):
