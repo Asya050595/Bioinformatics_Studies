@@ -3,7 +3,7 @@ from Bio import SeqIO
 fasta = "test1.fasta"
 
 def fastaParser(infile):
-    seqs = []
+    sequences = []
     headers = []
     with open(infile) as f:
         sequence = ""
@@ -12,17 +12,17 @@ def fastaParser(infile):
             if line.startswith('>'):
                 headers.append(line[1:-1])
                 if header:
-                    seqs.append([sequence])
+                    sequences.append([sequence])
                 sequence = ""
                 header = line[1:]
             else:
                 sequence += line.rstrip()
-        seqs.append([sequence])
-    return headers, seqs
+        sequences.append([sequence])
+    return headers, sequences
 
-headers, seqs = fastaParser(fasta)
+headers, sequences = fastaParser(fasta)
 
-flat_seqs = [item for sublist in seqs for item in sublist]
+flat_sequences = [item for sublist in sequences for item in sublist]
 
 def countNucs(instring):
     # will count upper and lower case sequences, if do not want lower case remove .upper()
@@ -38,5 +38,5 @@ with open('fasta_parse.txt', 'w') as f:
     print("Name   a   c   g   t   All", file=f)
     seq_dict = {rec.id : rec.seq for rec in SeqIO.parse("test1.fasta", "fasta")}
     for key, value in seq_dict.items():
-        for seq in flat_seqs:
+        for seq in flat_sequences:
             print(key, countNucs(seq), file=f)
